@@ -1,0 +1,46 @@
+-SET &&ID_PRODUCT = ''' ''' ;
+APP CREATE app02/bv_namespace_on IFNEXIST
+APP CREATE app02/bv_namespace_on/advanced IFNEXIST
+-*DM_REQ_DESC=Make BV Name Space ON                                             
+NTMAS MESSAGES OFF                                                              
+NTMAS OPEN _edahome/etc/app_templates/wf_retail/bv_namespace_on/wf_retail_lite_on
+NTMAS REPLACE_PATH SUB_QRY|SEGM|ACCEPT app02 -4                                 
+NTMAS WRITE app02/bv_namespace_on/wf_retail_lite_on                             
+NTMAS CLOSE                                                                     
+-RUN                                                                            
+NTMAS MESSAGES OFF                                                              
+NTMAS OPEN _edahome/etc/app_templates/wf_retail/bv_namespace_on/advanced/wf_retail_product_base
+NTMAS REFRESH_FLAGS DATREC                                                      
+NTMAS SET_PROP ROOT ROOT SUFFIX DATREC                                          
+NTMAS REPLACE_PATH SUB_QRY|SEGM|ACCEPT app02 -4                                 
+NTMAS SET_PROP ROOT ROOT DATASET "app02/dimensions/wf_retail_product.ftm"       
+                                                                                
+NTMAS TRANSFORM_FMT                                                             
+NTMAS WRITE app02/bv_namespace_on/advanced/wf_retail_product_base               
+NTMAS CLOSE                                                                     
+-RUN                                                                            
+NTMAS MESSAGES OFF                                                              
+NTMAS OPEN _edahome/etc/app_templates/wf_retail/bv_namespace_on/advanced/wf_retail_cls_small
+NTMAS REPLACE_PATH SUB_QRY|SEGM|ACCEPT app02 -4                                 
+NTMAS TRANSFORM_FMT                                                             
+NTMAS WRITE app02/bv_namespace_on/advanced/wf_retail_cls_small                  
+NTMAS CLOSE                                                                     
+-RUN                                                                            
+NTMAS MESSAGES OFF                                                              
+NTMAS OPEN _edahome/etc/app_templates/wf_retail/bv_namespace_on/advanced/wf_retail_sales_base
+NTMAS REFRESH_FLAGS DATREC                                                      
+NTMAS SET_PROP ROOT ROOT SUFFIX DATREC                                          
+NTMAS REPLACE_PATH SUB_QRY|SEGM|ACCEPT app02 -4                                 
+NTMAS SET_PROP ROOT ROOT DATASET "app02/facts/wf_retail_sales.ftm"              
+                                                                                
+NTMAS TRANSFORM_FMT                                                             
+NTMAS WRITE app02/bv_namespace_on/advanced/wf_retail_sales_base                 
+NTMAS CLOSE                                                                     
+-RUN                                                                            
+NTMAS MESSAGES OFF                                                              
+NTMAS OPEN _edahome/etc/app_templates/wf_retail/bv_namespace_on/advanced/wf_retail_customer_geography_base
+NTMAS REPLACE_PATH SUB_QRY|SEGM|ACCEPT app02 -4                                 
+NTMAS TRANSFORM_FMT                                                             
+NTMAS WRITE app02/bv_namespace_on/advanced/wf_retail_customer_geography_base    
+NTMAS CLOSE                                                                     
+-RUN                                                                            

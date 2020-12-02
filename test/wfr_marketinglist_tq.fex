@@ -1,0 +1,88 @@
+-*DM_JOB_TYPE=2
+-*DM_REQ_DESC=Marketing List
+-*-----------------------------------------------------------------------------*
+-* Copyright (c) Information Builders, Inc. All rights reserved. @MFSM_NOPROLOG@
+-*-----------------------------------------------------------------------------*
+ENGINE INT SET TABLESAMPLING_PERCENTAGE
+ENGINE INT SET FCA ON
+SET SHORTPATH=SQL
+JOIN
+   ID_AGE
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_AGE
+  IN app02/dimensions/wf_retail_age TAG T02
+ AS 'Join 1'
+END
+JOIN
+   WF_RETAIL_CUSTOMER.ID_INCOME
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_INCOME
+  IN app02/dimensions/wf_retail_income TAG T03
+ AS 'Join 2'
+END
+JOIN FULL_OUTER
+   WF_RETAIL_CUSTOMER.ID_EDUCATION
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_EDUCATION
+  IN app02/dimensions/wf_retail_education TAG T04
+ AS 'Join 3'
+END
+JOIN
+   WF_RETAIL_CUSTOMER.ID_GEOGRAPHY
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_GEOGRAPHY
+  IN app02/dimensions/wf_retail_geography TAG T05
+ AS 'Join 4'
+END
+JOIN
+   WF_RETAIL_CUSTOMER.ID_TIME_MIN
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_TIME
+  IN app02/dimensions/wf_retail_time TAG T06
+ AS 'Join 5'
+END
+JOIN
+   WF_RETAIL_CUSTOMER.ID_TIME_MAX
+  IN app02/dimensions/wf_retail_customer
+ TO
+   ID_TIME
+  IN app02/dimensions/wf_retail_time TAG T07
+ AS 'Join 6'
+END
+TABLE FILE app02/dimensions/wf_retail_customer
+ HEADING
+  "Report &FOCFOCEXEC"
+ WRITE
+   MAX.LASTNAME
+   MAX.FIRSTNAME
+   MAX.GENDER
+   MAX.EMAIL_ADDRESS
+   MAX.EDUCATION_TYPE
+   MAX.EDUCATION_DEGREE_TYPE
+   MAX.EDUCATION_DEGREE_SUBTYPE
+   COMPUTE INTERNET_PROVIDER/A60V MISSING ON
+      TITLE 'Internet,Provider'=SPLIT(EMAIL_DOMAIN, MAX.EMAIL_ADDRESS);
+   BY CONTINENT_NAME
+   BY COUNTRY_NAME
+   BY STATE_PROV_NAME
+   BY CITY_NAME
+ WHERE INCOME FROM 17320 TO 233800;
+ WHERE CONTINENT_NAME EQ 'Europe' OR 'North America';
+ WHERE WF_RETAIL_TIME.TIME_YEAR EQ _FOC_NULL;
+ ON TABLE SET PAGE NOPAGE
+ ON TABLE SET HOLDATTRS CUBE
+ ON TABLE SET HOLDLIST NOFOCLIST
+ ON TABLE SET EMPTYREPORT ON
+ ON TABLE SET SHORTPATH SQL
+ ON TABLE HOLD
+  NOKEYS
+  AS app02/test/wfr_marketinglist_tq
+  DATASET 'wfr_marketinglist_tq'
+ 
+  FORMAT DATREC
+END

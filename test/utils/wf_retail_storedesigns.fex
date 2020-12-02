@@ -1,0 +1,12 @@
+-*DM_JOB_TYPE=0                                                                 
+-*DM_REQ_DESC=Store Design Layouts                                              
+DEFINE FILE app02/dimensions/wf_retail_store                                    
+LAYOUT/A25 = IF STORE_LAYOUT_FORMAT IS MISSING THEN 'Web' ELSE STORE_LAYOUT_FORMAT ;
+END                                                                             
+TABLE FILE app02/dimensions/wf_retail_store                                     
+HEADING                                                                         
+"Store Layout Designs"                                                          
+BY LAYOUT AS 'Store,Layout,Design' WRITE FST.STORE_LAYOUT_IMAGE AS 'Layout,Image' ON TABLE SET PAGE-NUM OFF
+ON TABLE PCHOLD FORMAT HTML ON TABLE SET STYLE * TYPE=DATA,COLUMN=FST.STORE_LAYOUT_IMAGE,IMAGE=(FST.STORE_LAYOUT_IMAGE),SIZE=(.99 .99),$
+ENDSTYLE                                                                        
+END                                                                             

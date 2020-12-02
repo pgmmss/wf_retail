@@ -1,0 +1,25 @@
+-*DM_JOB_TYPE=8192
+-*DM_REQ_DESC=Create Age to Results/Age
+-*-----------------------------------------------------------------------------*
+-* Copyright (c) Information Builders, Inc. All rights reserved. @MFSM_NOPROLOG@
+-*-----------------------------------------------------------------------------*
+ENGINE INT SET TABLESAMPLING_PERCENTAGE
+ENGINE INT SET FCA ON
+TABLE FILE app02/dimensions/wf_retail_age
+ PRINT
+   AGE
+   AGE_RANGE
+   AGE_GROUP
+   BY ID_AGE
+ ON TABLE SET HOLDATTRS CUBE
+ ON TABLE SET HOLDLIST NOFOCLIST
+ ON TABLE SET EMPTYREPORT ON
+ ON TABLE SET SHORTPATH SQL
+ ON TABLE HOLD
+  NOKEYS
+  AS app02/dm/results/age_unkeyed
+  DATASET 'age_unkeyed'
+  FORMAT DATREC
+ HEADING
+  "Report &FOCFOCEXEC"
+END

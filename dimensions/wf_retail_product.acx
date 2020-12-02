@@ -1,0 +1,14 @@
+ SEGNAME=WF_RETAIL_PRODUCT, 
+   TABLENAME=wrd_wf_retail_product, $
+  FOREIGN_KEY=product_id_vendor_fk, 
+      PRIMARY_KEY_TABLE=wf_retail_vendor, 
+      FOREIGN_KEY_COLUMN=ID_VENDOR, 
+      PRIMARY_KEY_COLUMN=ID_VENDOR, $
+  FOREIGN_KEY=product_id_available_date_time, 
+      PRIMARY_KEY_TABLE=wf_retail_time, 
+      FOREIGN_KEY_COLUMN=ID_AVAILABLE_DATE, 
+      PRIMARY_KEY_COLUMN=ID_TIME, $
+  FOREIGN_KEY=product_id_discontinued_date_time, 
+      PRIMARY_KEY_TABLE=wf_retail_time, 
+      FOREIGN_KEY_COLUMN=ID_DISCONTINUED_DATE, 
+      PRIMARY_KEY_COLUMN=ID_TIME, $

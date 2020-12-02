@@ -1,0 +1,7 @@
+-*------------------------------------------------------------------------------------*
+-* Copyright (c) Information Builders, Inc. All rights reserved. @MFSM_NOPROLOG@      *
+-* This file is not to be edited by anyone without permission of product management.  *
+-*------------------------------------------------------------------------------------*
+-*FEX_DESCRIPTION=ACCEPT List Create
+TABLE FILE app02/dimensions/wf_retail_product PRINT ID_PRODUCT PRODUCT_NAME BY HIGHEST ID_PRODUCT NOPRINT ON TABLE PCHOLD FORMAT XML
+END
